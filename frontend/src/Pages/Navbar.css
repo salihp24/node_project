@@ -1,0 +1,269 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+/* Navbar Container */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 4rem;
+  background-color: #1a1a1a;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Logo */
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #c9a96e;
+  text-decoration: none;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.logo:hover {
+  color: #d4b57a;
+}
+
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+.nav-links a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.nav-links a:hover {
+  color: #c9a96e;
+}
+
+/* Profile Wrapper */
+.profile-wrapper {
+  position: relative;
+}
+
+/* Profile Button */
+.profile-btn {
+  background-color: transparent;
+  border: 1px solid #c9a96e;
+  color: #c9a96e;
+  padding: 0.625rem 1.75rem;
+  border-radius: 0;
+  font-weight: 400;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+.profile-btn:hover {
+  background-color: #c9a96e;
+  color: #1a1a1a;
+}
+
+/* Profile Dropdown */
+.profile-dropdown {
+  position: absolute;
+  top: calc(100% + 1rem);
+  right: 0;
+  background-color: #2a2a2a;
+  border: 1px solid #c9a96e;
+  padding: 1.5rem;
+  min-width: 240px;
+  animation: slideDown 0.2s ease;
+  z-index: 1001;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Profile Info */
+.profile-name {
+  font-weight: 500;
+  color: #c9a96e;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.05em;
+}
+
+.profile-email {
+  font-size: 0.875rem;
+  color: #a0a0a0;
+  margin-bottom: 0;
+}
+
+.profile-dropdown hr {
+  border: none;
+  border-top: 1px solid #404040;
+  margin: 1rem 0;
+}
+
+/* Logout Button */
+.logout-btn {
+  width: 100%;
+  padding: 0.625rem 1rem;
+  background-color: transparent;
+  border: 1px solid #c9a96e;
+  color: #c9a96e;
+  border-radius: 0;
+  font-weight: 400;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.logout-btn:hover {
+  background-color: #c9a96e;
+  color: #1a1a1a;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .navbar {
+    padding: 1.5rem 2rem;
+  }
+
+  .nav-links {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .logo {
+    font-size: 1.25rem;
+    letter-spacing: 0.2em;
+  }
+
+  .nav-links {
+    gap: 1.5rem;
+    font-size: 0.8rem;
+  }
+
+  .profile-btn {
+    padding: 0.5rem 1.25rem;
+    font-size: 0.8rem;
+  }
+
+  .profile-dropdown {
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 640px) {
+  .navbar {
+    padding: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .logo {
+    font-size: 1.125rem;
+    letter-spacing: 0.15em;
+  }
+
+  .nav-links {
+    width: 100%;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .nav-links a {
+    font-size: 0.75rem;
+  }
+
+  .profile-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+  }
+
+  .profile-dropdown {
+    right: 0;
+    min-width: 180px;
+  }
+}
+
+/* Active Link Style */
+.nav-links a.active {
+  color: #c9a96e;
+  font-weight: 500;
+}
+
+
+/* Premium cart link styling */
+.cart-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+}
+
+/* Cart badge - Premium version */
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  border-radius: 12px;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(231, 76, 60, 0.5);
+  border: 2px solid white;
+  animation: badge-appear 0.3s ease;
+}
+
+/* Appear animation */
+@keyframes badge-appear {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Hover effect */
+.cart-link:hover .cart-badge {
+  transform: scale(1.1);
+}

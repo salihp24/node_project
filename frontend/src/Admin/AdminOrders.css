@@ -1,0 +1,170 @@
+/* Main container */
+.admin-orders {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Title */
+.orders-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  color: #0d7f8f;
+  margin: 0 0 2.5rem 0;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  border-bottom: 3px solid #0d7f8f;
+  padding-bottom: 1rem;
+}
+
+/* No orders message */
+.no-orders {
+  background: white;
+  padding: 3rem;
+  border-radius: 12px;
+  text-align: center;
+  color: #999;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Table container for scroll */
+.orders-table-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  overflow-x: auto;
+}
+
+/* Table styling */
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+
+.orders-table thead {
+  background-color: #0d7f8f;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.orders-table th {
+  padding: 1.25rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.orders-table tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+  transition: background-color 0.2s ease;
+}
+
+.orders-table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.orders-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.orders-table td {
+  padding: 1.25rem 1rem;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+/* Order ID styling */
+.orders-table td:first-child {
+  font-weight: 600;
+  color: #0d7f8f;
+}
+
+/* Amount styling */
+.orders-table td.amount {
+  font-weight: 600;
+  color: #0d7f8f;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+}
+
+/* Payment status badges */
+.status {
+  padding: 0.4rem 0.9rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  display: inline-block;
+}
+
+.status.paid,
+.status.completed,
+.status.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status.pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status.failed,
+.status.cancelled {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.status.processing {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .orders-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .orders-table-container {
+    border-radius: 8px;
+  }
+
+  .orders-table {
+    min-width: 800px;
+  }
+
+  .orders-table th,
+  .orders-table td {
+    padding: 1rem 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  .orders-table td.amount {
+    font-size: 1rem;
+  }
+
+  .status {
+    padding: 0.3rem 0.7rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .orders-title {
+    font-size: 1.5rem;
+  }
+
+  .orders-table th,
+  .orders-table td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.8rem;
+  }
+}

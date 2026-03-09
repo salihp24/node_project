@@ -1,0 +1,295 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
+
+.product-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(197, 157, 95, 0.2);
+    border-radius: 2px;
+    padding: 20px;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.product-card:hover {
+    border-color: #c59d5f;
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(197, 157, 95, 0.2);
+}
+
+.product-image {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 2px;
+    margin-bottom: 20px;
+    transition: all 0.4s ease;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
+}
+
+.product-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #c59d5f;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+    line-height: 1.3;
+}
+
+.product-description {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: #b0b0b0;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    flex-grow: 1;
+    letter-spacing: 0.3px;
+}
+
+.product-price {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #e0e0e0;
+    letter-spacing: 1px;
+    margin-top: auto;
+}
+
+/* Grid Container - Add this to parent component */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    padding: 40px 50px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+        padding: 30px 40px;
+    }
+}
+
+@media (max-width: 900px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+        padding: 25px 30px;
+    }
+    
+    .product-image {
+        height: 240px;
+    }
+    
+    .product-title {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .product-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 20px;
+    }
+    
+    .product-image {
+        height: 300px;
+    }
+}
+.view-details-button {
+    width: 100%;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #eaeaea 0%, #a4a4a4 100%);
+    border: none;
+    border-radius: 2px;
+    color: #1a1a1a;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 12px;
+    box-shadow: 0 4px 15px rgba(197, 157, 95, 0.3);
+}
+.add-to-cart-button {
+    width: 100%;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #c59d5f 0%, #a67c52 100%);
+    border: none;
+    border-radius: 2px;
+    color: #1a1a1a;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 12px;
+    box-shadow: 0 4px 15px rgba(197, 157, 95, 0.3);
+}
+.view-details-button:hover {
+    background: linear-gradient(135deg, #ffffff 0%, #d5d5d5 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(197, 157, 95, 0.4);
+}
+.add-to-cart-button:hover {
+    background: linear-gradient(135deg, #d4a574 0%, #c59d5f 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(197, 157, 95, 0.4);
+}
+
+.add-to-cart-button:active {
+    transform: translateY(0);
+}
+
+/* Search Bar */
+.search-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+}
+
+.search-bar input:focus {
+    border-color: #4f46e5;
+}
+
+.search-bar button {
+    padding: 10px 16px;
+    background: #f3f4f6;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.search-bar button:hover {
+    background: #e5e7eb;
+}
+
+/* Category Filters */
+.category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.category-btn {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background: white;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s;
+}
+
+.category-btn:hover {
+    background: #f3f4f6;
+}
+
+.category-btn.active {
+    background: #4f46e5;
+    color: white;
+    border-color: #4f46e5;
+}
+
+.search-bar{
+    margin-top: 50px;
+}
+
+
+/* Search Bar Container */
+.search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+/* Wrapper that expands */
+.search-wrapper {
+    width: 0;
+    overflow: hidden;
+    transition: width 0.4s ease;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.search-wrapper.open {
+    width: 280px;  /* expand to this width */
+}
+
+.search-input {
+    width: 100%;
+    padding: 8px 32px 8px 14px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.search-input:focus {
+    border-color: #4f46e5;
+}
+
+/* ✕ clear button inside input */
+.search-clear-btn {
+    position: absolute;
+    right: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    color: #888;
+}
+
+.search-clear-btn:hover {
+    color: #333;
+}
+
+/* 🔍 Icon button */
+.search-icon-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    flex-shrink: 0;
+}
+
+.search-icon-btn:hover {
+    background: #f3f4f6;
+}

@@ -1,0 +1,406 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Salih",
+      "email": "salihp2423@gmail.com",
+      "password": "123654",
+      "role": "admin",
+      "isBlocked": false
+    },
+    {
+      "id": "2",
+      "name": "Amal ",
+      "email": "amal@gmail.com",
+      "password": "12345",
+      "role": "user",
+      "isBlocked": false
+    },
+    {
+      "id": "3",
+      "name": "Jifu",
+      "email": "jifu@gmail.com",
+      "password": "12345",
+      "role": "user",
+      "isBlocked": false
+    },
+    {
+      "id": "4",
+      "name": "Ramees",
+      "email": "ramees@gmail.com",
+      "password": "123456",
+      "role": "user",
+      "isBlocked": false
+    },
+    {
+      "id": "5",
+      "name": "anu",
+      "email": "anu@gmail.com",
+      "password": "123",
+      "role": "user",
+      "isBlocked": false
+    },
+    {
+      "id": "fcd0",
+      "name": "Adhil",
+      "email": "adhil@gmail.com",
+      "password": "12345",
+      "role": "user",
+      "isBlocked": false
+    },
+    {
+      "id": "4b02",
+      "name": "Jak",
+      "email": "jak@gmail.com",
+      "password": "123",
+      "isBlocked": false
+    },
+    {
+      "id": "6c4a",
+      "name": "Salih",
+      "email": "salih@gmail.com",
+      "password": "78945"
+    }
+  ],
+  "products": [
+    {
+      "id": "bc88",
+      "title": "Titan Stellar",
+      "price": "16,200",
+      "description": "For Men | Celestial Creation",
+      "image": "https://www.titan.co.in/dw/image/v2/BKDD_PRD/on/demandware.static/-/Sites-titan-master-catalog/default/dw45ad3d24/images/Titan/Catalog/10009KM03_1.jpg?sw=600&sh=600",
+      "category": "Titan"
+    },
+    {
+      "id": "fda3",
+      "title": "Titan Luna Sun Moon Phase",
+      "price": "13,000",
+      "description": "Seinna Brown - Stellar Edition",
+      "image": "https://www.titan.co.in/dw/image/v2/BKDD_PRD/on/demandware.static/-/Sites-titan-master-catalog/default/dwffecb713/images/Titan/Catalog/10028KL02_1.jpg?sw=600&sh=600",
+      "category": "Titan"
+    },
+    {
+      "id": "0ee6",
+      "title": "Titan Stellar Cupola",
+      "price": "43,500",
+      "description": "Automatic Analog with Sun Moon Phase and Silver",
+      "image": "https://www.titan.co.in/dw/image/v2/BKDD_PRD/on/demandware.static/-/Sites-titan-master-catalog/default/dwa6337b93/images/Titan/Catalog/10011QL01_1.jpg?sw=600&sh=600",
+      "category": "Titan"
+    },
+    {
+      "id": "c6e2",
+      "title": "Rolex Day-Date",
+      "price": "10,479,000",
+      "description": "Oyster, 40 mm, platinum and diamonds",
+      "image": "https://cdn2.ethoswatches.com/rolex/pub/media/catalog/product/cache/a68df29a9e2afb500a8d2ce09034894d/m/2/m228396tbr-0030-multiple-1.jpg",
+      "category": "Rolex"
+    },
+    {
+      "id": "3129",
+      "title": "Rolex Oyster Perpetual 31",
+      "price": "581,800",
+      "description": "Oyster, 31 mm, Oyster steel\nM277200-0017",
+      "image": "https://cdn2.ethoswatches.com/rolex/pub/media/catalog/product/cache/a68df29a9e2afb500a8d2ce09034894d/m/2/m277200-0017-multiple-3.jpg",
+      "category": "Rolex"
+    },
+    {
+      "id": "8100",
+      "title": "Rolex Submariner Date",
+      "price": "1,755,000",
+      "description": "Oyster, 41 mm, Oyster steel and yellow gold\nM126613LB-0002\n",
+      "image": "https://cdn2.ethoswatches.com/rolex/pub/media/catalog/product/cache/a68df29a9e2afb500a8d2ce09034894d/m/1/m126613lb-0002-multiple-1.jpg",
+      "category": "Rolex"
+    },
+    {
+      "id": "b7ea",
+      "title": "Favre Leuba Deep Raider Revival",
+      "price": "2,39,000",
+      "description": "Favre Leuba proudly brought back its iconic 1964 Deep Blue in 2024",
+      "image": "https://cdn1.ethoswatches.com/media/catalog/product/cache/6e5de5bc3d185d8179cdc7258143f41a/f/a/favre-leuba-deep-blue-00-20307-100-06-200-multiple-4_3.jpg",
+      "category": "Favre Leuba"
+    },
+    {
+      "id": "c3fe",
+      "title": "Favre Leuba Sea Sky Revival",
+      "price": "4,39,000",
+      "description": "An embodiment of precision, sophistication, and a nod to the spirit of adventure",
+      "image": "https://cdn1.ethoswatches.com/media/catalog/product/cache/6e5de5bc3d185d8179cdc7258143f41a/f/a/favre-leuba-sea-sky-reviva-l00-20212-112-02-105-multiple-1_1.jpg",
+      "category": "Favre Leuba"
+    },
+    {
+      "id": "6fb8",
+      "title": "Jacob & Co. Caligula Stainless Steel",
+      "price": "36,00,000",
+      "description": "The Caligula Stainless Steel by Jacob & Co. stands",
+      "image": "https://cdn1.ethoswatches.com/media/catalog/product/cache/6e5de5bc3d185d8179cdc7258143f41a/j/a/jacob-co-caligula-cl100-10-ns-ab-aca4a-multiple-1.jpg",
+      "category": "Jacob & Co"
+    },
+    {
+      "id": "c771",
+      "title": "Jacob & Co. Palatial ",
+      "price": "20,00,000",
+      "description": "Classic Manual Big Date - Stainless Steel (Lapis Lazuli) Bracelet",
+      "image": "https://cdn1.ethoswatches.com/media/catalog/product/cache/6e5de5bc3d185d8179cdc7258143f41a/j/a/jacob-co-palatial-pc400-10-aa-ad-a10aa-multiple-3.jpg",
+      "category": "Jacob & Co"
+    }
+  ],
+  "cart": [
+    {
+      "id": "cd16",
+      "userId": "admin",
+      "productId": null,
+      "title": "Movado",
+      "price": "67,125",
+      "image": "https://static.helioswatchstore.com/media/catalog/product/3/6/3600854_1.jpg",
+      "quantity": 1
+    }
+  ],
+  "orders": [
+    {
+      "id": "eb08",
+      "userId": "fcd0",
+      "userName": "Adhil",
+      "userEmail": "adhil@gmail.com",
+      "items": [
+        {
+          "productId": "7",
+          "title": "Victorinox",
+          "price": "45,800",
+          "quantity": 1
+        }
+      ],
+      "totalAmount": 45800,
+      "paymentMethod": "COD",
+      "paymentStatus": "Paid",
+      "address": {
+        "name": "afda",
+        "addres": "asdas",
+        "city": "sadas",
+        "pincode": "asdas"
+      },
+      "createdAt": "2026-01-12T17:55:50.070Z"
+    },
+    {
+      "id": "0311",
+      "userId": "4b02",
+      "userName": "Jak",
+      "userEmail": "jak@gmail.com",
+      "items": [
+        {
+          "productId": "4",
+          "title": "Milus",
+          "price": "1,87,100",
+          "quantity": 1
+        }
+      ],
+      "totalAmount": 187100,
+      "paymentMethod": "CARD",
+      "paymentStatus": "Paid",
+      "address": {
+        "name": "Jak",
+        "addres": "asjnskajn",
+        "city": "Manjeri",
+        "pincode": "673642"
+      },
+      "createdAt": "2026-01-13T04:18:45.373Z"
+    },
+    {
+      "id": "4cda",
+      "userId": "fcd0",
+      "userName": "Adhil",
+      "userEmail": "adhil@gmail.com",
+      "items": [
+        {
+          "productId": "3",
+          "title": "Movado",
+          "price": "67,125",
+          "quantity": 1
+        }
+      ],
+      "totalAmount": 67125,
+      "paymentMethod": "COD",
+      "paymentStatus": "Paid",
+      "address": {
+        "name": "Adhil",
+        "addres": "manjeri",
+        "city": "manjeri",
+        "pincode": "673642"
+      },
+      "createdAt": "2026-01-13T07:53:46.541Z"
+    },
+    {
+      "id": "fec1",
+      "userId": "2",
+      "userName": "Amal ",
+      "userEmail": "amal@gmail.com",
+      "items": [
+        {
+          "productId": "8",
+          "title": "Seiko",
+          "price": "60,000",
+          "quantity": 1
+        }
+      ],
+      "totalAmount": 60000,
+      "paymentMethod": "COD",
+      "paymentStatus": "Paid",
+      "address": {
+        "name": "Amal",
+        "addres": "Kdy",
+        "city": "Kdy",
+        "pincode": "584762"
+      },
+      "createdAt": "2026-01-13T10:20:08.219Z"
+    },
+    {
+      "id": "fec1",
+      "userId": "5",
+      "userName": "anu",
+      "userEmail": "anu@gmail.com",
+      "items": [
+        {
+          "productId": "6",
+          "title": "Tissot",
+          "price": "41,000",
+          "quantity": 1
+        }
+      ],
+      "totalAmount": 41000,
+      "paymentMethod": "COD",
+      "paymentStatus": "Paid",
+      "address": {
+        "name": "Anu",
+        "addres": "Manjeri",
+        "city": "Manjeri",
+        "pincode": "157964"
+      },
+      "createdAt": "2026-01-13T10:21:44.732Z"
+    },
+    {
+      "id": "ad63",
+      "userId": "6",
+      "userName": "Salih",
+      "userEmail": "salih@gmail.com",
+      "items": [
+        {
+          "productId": "3",
+          "title": "Movado",
+          "price": "67,125",
+          "quantity": 2
+        }
+      ],
+      "totalAmount": 134250,
+      "paymentMethod": "CARD",
+      "paymentStatus": "Paid",
+      "address": {
+        "name": "Salih",
+        "addres": "Malappuram",
+        "city": "Malappuram",
+        "pincode": "673642"
+      },
+      "createdAt": "2026-01-13T10:22:28.282Z"
+    },
+    {
+      "id": "a96d",
+      "userId": "6",
+      "userName": "Salih",
+      "userEmail": "salih@gmail.com",
+      "items": [
+        {
+          "productId": "3",
+          "title": "Movado",
+          "price": "67,125",
+          "quantity": 2
+        },
+        {
+          "productId": "8",
+          "title": "Seiko",
+          "price": "60,000",
+          "quantity": 1
+        }
+      ],
+      "totalAmount": 194250,
+      "paymentMethod": "COD",
+      "paymentStatus": "Paid",
+      "address": {
+        "name": "saS",
+        "addres": "SDSAD",
+        "city": "ASDSA",
+        "pincode": "ASD"
+      },
+      "createdAt": "2026-01-13T10:25:43.825Z"
+    },
+    {
+      "id": "f954",
+      "userId": "3",
+      "userName": "Jifu",
+      "userEmail": "jifu@gmail.com",
+      "items": [
+        {
+          "productId": "3",
+          "title": "Movado",
+          "price": "67,125",
+          "quantity": 1
+        }
+      ],
+      "totalAmount": 67125,
+      "paymentMethod": "COD",
+      "paymentStatus": "Paid",
+      "address": {
+        "name": "asdseqw",
+        "addres": "qwewq",
+        "city": "qweqw",
+        "pincode": "qwed"
+      },
+      "createdAt": "2026-01-19T07:18:35.556Z"
+    },
+    {
+      "id": "c7b1",
+      "userId": "fcd0",
+      "userName": "Adhil",
+      "userEmail": "adhil@gmail.com",
+      "items": [
+        {
+          "productId": "2",
+          "title": "Balmain",
+          "price": "56,000",
+          "quantity": 1
+        }
+      ],
+      "totalAmount": 56000,
+      "paymentMethod": "COD",
+      "paymentStatus": "Paid",
+      "address": {
+        "name": "asda",
+        "addres": "ddsa",
+        "city": "asd",
+        "pincode": "asd"
+      },
+      "createdAt": "2026-01-30T10:10:17.349Z"
+    },
+    {
+      "id": "4fb6",
+      "userId": "fcd0",
+      "userName": "Adhil",
+      "userEmail": "adhil@gmail.com",
+      "items": [
+        {
+          "productId": "7",
+          "title": "Victorinox",
+          "price": "45,800",
+          "quantity": 1
+        }
+      ],
+      "totalAmount": 45800,
+      "paymentMethod": "COD",
+      "paymentStatus": "Paid",
+      "address": {
+        "name": "Salih",
+        "addres": "Manjeri",
+        "city": "Manjeri",
+        "pincode": "673642"
+      },
+      "createdAt": "2026-02-12T04:49:20.359Z"
+    }
+  ]
+}

@@ -1,0 +1,309 @@
+/* ProductDetails.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+.product-details-page {
+  background: #ffffff;
+  min-height: calc(100vh - 200px);
+}
+
+.product-details-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 40px;
+}
+
+.product-details-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.details-image-section {
+  position: sticky;
+  top: 100px;
+}
+
+.details-main-image-container {
+  width: 100%;
+  height: 550px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  border: 1px solid rgba(131, 197, 190, 0.15);
+  box-shadow: 0 10px 40px rgba(0, 109, 119, 0.1);
+}
+
+.details-main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.4s ease;
+}
+
+.details-main-image:hover {
+  transform: scale(1.05);
+}
+
+.details-info-section {
+  padding: 20px 0;
+}
+
+.details-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: #006d77;
+  margin: 0 0 10px 0;
+  letter-spacing: 1px;
+}
+
+.details-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #6c757d;
+  margin: 0 0 30px 0;
+  letter-spacing: 0.5px;
+  line-height: 1.6;
+}
+
+.details-price-section {
+  background: linear-gradient(135deg, rgba(131, 197, 190, 0.08), rgba(0, 109, 119, 0.05));
+  padding: 25px 30px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  border: 1px solid rgba(131, 197, 190, 0.2);
+}
+
+.details-price {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: #006d77;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.details-price::before {
+  content: '₹';
+  font-size: 28px;
+  margin-right: 5px;
+  color: #83c5be;
+}
+
+.details-original-price {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: #999;
+  text-decoration: line-through;
+  margin: 10px 0 0 0;
+}
+
+.details-description-section {
+  margin: 35px 0;
+}
+
+.details-section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #006d77;
+  margin: 0 0 15px 0;
+  letter-spacing: 0.5px;
+}
+
+.details-description {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: #495057;
+  line-height: 1.8;
+  margin: 0 0 20px 0;
+  letter-spacing: 0.3px;
+}
+
+.details-features {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.details-features li {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #495057;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(131, 197, 190, 0.15);
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.3px;
+}
+
+.details-features li::before {
+  content: '✓';
+  color: #83c5be;
+  font-weight: 700;
+  font-size: 18px;
+  margin-right: 15px;
+}
+
+.details-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 35px;
+}
+
+.details-btn-add-to-cart {
+  flex: 1;
+  font-family: 'Montserrat', sans-serif;
+  padding: 18px 35px;
+  background: linear-gradient(135deg, #006d77 0%, #004d54 100%);
+  color: #edf6f9;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 109, 119, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.details-btn-add-to-cart::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(131, 197, 190, 0.4), transparent);
+  transition: left 0.6s ease;
+}
+
+.details-btn-add-to-cart:hover::before {
+  left: 100%;
+}
+
+.details-btn-add-to-cart:hover {
+  background: linear-gradient(135deg, #007d88 0%, #005a62 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 109, 119, 0.4);
+}
+
+.details-btn-buy-now {
+  flex: 1;
+  font-family: 'Montserrat', sans-serif;
+  padding: 18px 35px;
+  background: linear-gradient(135deg, #83c5be 0%, #6aada7 100%);
+  color: #006d77;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(131, 197, 190, 0.3);
+}
+
+.details-btn-buy-now:hover {
+  background: linear-gradient(135deg, #94d6cf 0%, #7bbdb7 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(131, 197, 190, 0.4);
+}
+
+.details-loading-container,
+.details-error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  color: #006d77;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+  .product-details-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .details-image-section {
+    position: static;
+  }
+
+  .details-main-image-container {
+    height: 450px;
+  }
+}
+
+@media (max-width: 768px) {
+  .product-details-container {
+    padding: 40px 25px;
+  }
+
+  .details-brand {
+    font-size: 28px;
+  }
+
+  .details-title {
+    font-size: 16px;
+  }
+
+  .details-price {
+    font-size: 36px;
+  }
+
+  .details-main-image-container {
+    height: 400px;
+    padding: 30px;
+  }
+
+  .details-actions {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-details-container {
+    padding: 30px 20px;
+  }
+
+  .details-brand {
+    font-size: 24px;
+  }
+
+  .details-title {
+    font-size: 15px;
+  }
+
+  .details-price {
+    font-size: 32px;
+  }
+
+  .details-main-image-container {
+    height: 350px;
+    padding: 25px;
+  }
+
+  .details-btn-add-to-cart,
+  .details-btn-buy-now {
+    padding: 16px 30px;
+    font-size: 14px;
+  }
+}
+

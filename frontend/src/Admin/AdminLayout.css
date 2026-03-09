@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap');
+
+/* Root container */
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #e8f0f2;
+  font-family: 'Inter', sans-serif;
+  width: 1521px;
+}
+
+/* Sidebar/Aside */
+.admin-sidebar {
+  width: 280px;
+  background-color: #ffffff;
+  padding: 2rem;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+  position: fixed;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  overflow-y: auto;
+}
+
+.admin-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0d7f8f;
+  margin-bottom: 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid #e8f0f2;
+}
+
+/* Navigation */
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.admin-nav a {
+  display: block;
+  padding: 1rem 1.5rem;
+  color: #6b7280;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.admin-nav a:hover {
+  background-color: #f0f5f7;
+  color: #0d7f8f;
+  transform: translateX(5px);
+}
+
+.admin-logout-btn{
+  width:85px;
+  height:35px;
+  background-color: rgb(31, 120, 143);
+  color: #ffffff;
+  border: 1px solid;
+  border-radius: 9px;
+  margin-top: 380px;
+  font-size: 18px;
+}
+.admin-logout-btn:hover{
+ 
+  background-color: rgb(39, 146, 172);
+  color: #f0f0f0;
+}
+
+.admin-nav a.active {
+  background-color: #0d7f8f;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Main Content Area */
+.admin-content {
+  flex: 1;
+  margin-left: 280px;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .admin-sidebar {
+    width: 240px;
+  }
+
+  .admin-content {
+    margin-left: 240px;
+  }
+
+  .admin-title {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-layout {
+    flex-direction: column;
+  }
+
+  .admin-sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding: 1.5rem;
+  }
+
+  .admin-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+  }
+
+  .admin-nav {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 0.75rem;
+  }
+
+  .admin-nav a {
+    padding: 0.75rem 1.25rem;
+    white-space: nowrap;
+  }
+
+  .admin-nav a:hover {
+    transform: translateX(0);
+  }
+
+  .admin-content {
+    margin-left: 0;
+    padding: 1.5rem;
+  }
+}
+
+/* Scrollbar Styling */
+.admin-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.admin-sidebar::-webkit-scrollbar-track {
+  background: #f0f5f7;
+  border-radius: 10px;
+}
+
+.admin-sidebar::-webkit-scrollbar-thumb {
+  background: #5da9b3;
+  border-radius: 10px;
+}
+
+.admin-sidebar::-webkit-scrollbar-thumb:hover {
+  background: #0d7f8f;
+}
