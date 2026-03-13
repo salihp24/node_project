@@ -71,6 +71,13 @@ export const getCart = asyncHandler(async (req, res) => {
     const cart = await Cart.findOne({ userId: req.user._id })
         .populate("items.productId")
 
+    if (!cart) {
+        return res.json({
+            items: [],
+            message: "Cart is empty"
+        })
+    }
+
     res.json(cart)
 })
 

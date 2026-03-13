@@ -7,7 +7,7 @@ export const getStats=asyncHandler(async(req,res)=>{
 
     const totalRevenue=orders.reduce((sum,O)=>sum+O.totalPrice, 0)
     const totalProductsPurchased=orders.reduce((sum,o)=>sum+o.totalItems, 0)
-    const totalOrders= Order.length
+    const totalOrders= orders.length
 
     res.json({totalOrders, totalProductsPurchased, totalRevenue})
 })

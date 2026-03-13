@@ -27,10 +27,15 @@ const userSchema = new mongoose.Schema(
             type: String,
             default: ""
         },
-        role:{
-            type:String,
-            enum:["user", "admin"],
-            default:"user"
+        role: {
+            type: String,
+            enum: ["user", "admin"],
+            default: "user"
+        },
+        
+        isBlocked: {
+            type: Boolean,
+            default: false
         },
 
         isDeleted: {
@@ -53,17 +58,17 @@ userSchema.pre("save", async function () {
 })
 
 //Compare password 
-userSchema.methods.matchPassword = async function(enteredPassword){
+userSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password)
 }
 
 //Remove password when sending response
-userSchema.methods.toJSON= function(){
-    const user= this.toObject()
+userSchema.methods.toJSON = function () {
+    const user = this.toObject()
     delete user.password
     return user
 }
 
-const User=mongoose.model("User", userSchema)
+const User = mongoose.model("User", userSchema)
 
 export default User
