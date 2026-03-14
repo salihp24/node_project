@@ -22,7 +22,7 @@ export const createOrder = asyncHandler(async (req,res)=>{
 
         return {
             productId: item.productId._id,
-            name: item.productId.name,
+            name: item.productId.title,
             price: item.productId.price,
             quantity: item.quantity,
             image: item.productId.image

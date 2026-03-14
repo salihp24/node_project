@@ -1,11 +1,13 @@
-import { Navigate } from "react-router-dom"
+import { Navigate, Outlet } from "react-router-dom"
 
-function UserProtect({ children }) {
+function UserProtect() {
   const isLoggedIn = localStorage.getItem("isLoggedIn")
+  
   if (!isLoggedIn) {
     return <Navigate to="/login" replace />
   }
-  return children
+  
+  return <Outlet /> 
 }
 
 export default UserProtect

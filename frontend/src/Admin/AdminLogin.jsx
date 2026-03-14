@@ -1,33 +1,45 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import apiClient from "../api/apiClient"
 import "./AdminLogin.css"
 
 function AdminLogin() {
+
   const [email, setEmail] = useState("")
   const [pass, setPass] = useState("")
   const navigate = useNavigate()
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault()
 
-    if (email === "admin@gmail.com" && pass === "Admin@10") {
+    try {
 
-      
-      sessionStorage.setItem("adminAuth", "true")
-      sessionStorage.setItem("adminRole", "admin")
+      const res = await apiClient.post("/admin/login", {
+        email,
+        password: pass
+      })
+
+      const data = res.data
+
+      sessionStorage.setItem("adminToken", data.token)
+      sessionStorage.setItem("adminRole", data.role)
+
 
       navigate("/admin/dashboard", { replace: true })
-    } else {
-      alert("Credentials Are Not Matching")
+
+    } catch (error) {
+      alert(error.response?.data?.message || "Invalid admin credentials")
     }
   }
 
   return (
     <div className="admin-login-page">
       <div className="admin-login-container">
+
         <h2>Admin Login</h2>
 
         <form onSubmit={handleLogin} className="admin-login-form">
+
           <input
             type="email"
             placeholder="Admin Email"
@@ -47,7 +59,9 @@ function AdminLogin() {
           <button type="submit" className="admin-login-btn">
             Access Dashboard
           </button>
+
         </form>
+
       </div>
     </div>
   )

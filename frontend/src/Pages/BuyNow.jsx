@@ -1,258 +1,234 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
-import { useState, useEffect } from 'react'
-import axios from 'axios'
+import React, { useState, useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+import apiClient from '../api/apiClient'
 import "./BuyNow.css"
 
 function BuyNow() {
-    const {id}=useParams()
-    const [product, setProduct]=useState(null)
-    const [cartItems,setCartItems]=useState([])
+    const { id } = useParams()
+    const navigate = useNavigate()
 
-    const [address,setAddress]=useState({
-      name:"",
-      addres:"",
-      city:"",
-      pincode:""
+    const [product, setProduct] = useState(null)
+    const [cartItems, setCartItems] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [placing, setPlacing] = useState(false)
+    const [error, setError] = useState("")
+
+    const [address, setAddress] = useState({
+        name: "",
+        address: "",
+        city: "",
+        pincode: ""
     })
-    const [payment, setPayment]=useState("")
-    const [cardDetails, setCardDetails] = useState({cardOrUpi: ""})
+    const [payment, setPayment] = useState("")
+    const [cardOrUpi, setCardOrUpi] = useState("")
 
-    useEffect(()=>{
-        const userId=localStorage.getItem("userId")
-
-        if(id){
-          axios.get(`http://localhost:3001/products/${id}`)
-          .then(res=>setProduct(res.data))
-          .catch(err=>console.log("Failed to fetch product", err))
-        }else{
-          axios.get(`http://localhost:3001/cart?userId=${userId}`)
-          .then(res=>setCartItems(res.data))
-          .catch(err=>console.log("Failed to fetch cart", err))
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true)
+            setError("")
+            try {
+                if (id) {
+                    const { data } = await apiClient.get(`/products/${id}`)
+                    setProduct(data)
+                } else {
+                    const { data } = await apiClient.get("/cart")
+                    setCartItems(data.items || [])
+                }
+            } catch (err) {
+                setError(err.response?.data?.message || "Failed to load data")
+            } finally {
+                setLoading(false)
+            }
         }
+        fetchData()
     }, [id])
 
-    if(id && !product) return <p>Loading...</p>
-    if(!id && cartItems.length===0) return <p style={{color:"white"}}>No Products</p>
+    const totalAmount = id
+        ? product?.price || 0
+        : cartItems.reduce((sum, item) => sum + item.productId.price * item.quantity, 0)
+
+    const validate = () => {
+        if (!address.name || !address.address || !address.city || !address.pincode) {
+            setError("Please fill all address fields")
+            return false
+        }
+        if (!payment) {
+            setError("Please select a payment method")
+            return false
+        }
+        if (payment === "CARD" && !cardOrUpi.trim()) {
+            setError("Please enter card number or UPI ID")
+            return false
+        }
+        return true
+    }
 
     const handlePlaceOrder = async () => {
-  const userId = localStorage.getItem("userId")
-  if (!userId) {
-    alert("User not logged in")
-    return
-  }
+        setError("")
+        if (!validate()) return
 
-  if (
-    !address.name ||
-    !address.addres ||
-    !address.city ||
-    !address.pincode
-  ) {
-    alert("Please fill all address fields")
-    return
-  }
+        setPlacing(true)
+        try {
+            if (id) {
+                await apiClient.post("/cart", { productId: id, quantity: 1 })
+            }
 
-  if (!payment) {
-    alert("Please select a payment method")
-    return
-  }
+            const { data } = await apiClient.post("/orders")
 
-  if (payment === "CARD" && !cardDetails.cardOrUpi) {
-    alert("Please Enter Card or UPI Details")
-    return
-  }
+            alert(`Order placed successfully! Order ID: ${data._id}`)
+            navigate("/my-orders")
 
-  try {
-    
-    const userRes = await axios.get(
-      `http://localhost:3001/users/${userId}`
-    )
-    const user = userRes.data
-
-    
-    const items = id
-      ? [{
-          productId: product.id,
-          title: product.title,
-          price: product.price,
-          quantity: 1
-        }]
-      : cartItems.map(item => ({
-          productId: item.productId,
-          title: item.title,
-          price: item.price,
-          quantity: item.quantity
-        }))
-
-    
-    const totalAmount = items.reduce((sum, item) => {
-      const price = Number(item.price.replace(/,/g, ""))
-      return sum + price * item.quantity
-    }, 0)
-
-    
-    const order = {
-      userId: user.id,
-      userName: user.name,
-      userEmail: user.email,
-      items,
-      totalAmount,
-      paymentMethod: payment,
-      paymentStatus: "Paid",
-      address,
-      createdAt: new Date().toISOString()
+        } catch (err) {
+            setError(err.response?.data?.message || "Failed to place order")
+        } finally {
+            setPlacing(false)
+        }
     }
 
-    
-    await axios.post("http://localhost:3001/orders", order)
+    if (loading) return <p className="status-msg">Loading...</p>
 
-    
-    if (!id) {
-      await Promise.all(
-        cartItems.map(item =>
-          axios.delete(`http://localhost:3001/cart/${item.id}`)
-        )
-      )
-      setCartItems([])
-    }
+    if (!id && cartItems.length === 0)
+        return <p className="status-msg">Your cart is empty</p>
 
-    alert("Order placed successfully!")
-  } catch (err) {
-    console.error("Order failed:", err)
-    alert("Failed to place order")
-  }
-}
+    if (id && !product)
+        return <p className="status-msg">Product not found</p>
 
+    return (
+        <div className="checkout-wrapper">
+            <h2 className="checkout-heading">Complete Your Order</h2>
 
-  return (
-    <div className="checkout-wrapper">
-      <h2 className="checkout-heading">Complete Your Order</h2>
+            {error && <p className="error-msg">{error}</p>}
 
-      <div className="checkout-grid">
-        
-        
-        {id && product && (
-          <div className="product-display">
-            <img src={product.image} alt={product.title} />
-            <h3>{product.title}</h3>
-            <p>{product.description}</p>
-            <h4>{product.price}</h4>
-          </div>
-        )}
+            <div className="checkout-grid">
 
-        
-        {!id && (
-          <div className="cart-items-display">
-            {cartItems.map(item => (
-              <div key={item.id} className="cart-single-item">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="cart-item-image"
-                />
-                <div>
-                  <h3>{item.title}</h3>
-                  <p>Quantity: {item.quantity}</p>
-                  <p>₹{item.price}</p>
+                {/* Single product - Buy Now */}
+                {id && product && (
+                    <div className="product-display">
+                        <img src={product.image} alt={product.title} />
+                        <h3>{product.title}</h3>
+                        <p>{product.description}</p>
+                        <h4>₹{product.price}</h4>
+                    </div>
+                )}
+
+                {/* Cart items - Checkout */}
+                {!id && (
+                    <div className="cart-items-display">
+                        {cartItems.map(item => (
+                            <div key={item._id} className="cart-single-item">
+                                <img
+                                    src={item.productId.image}
+                                    alt={item.productId.title}
+                                    className="cart-item-image"
+                                />
+                                <div>
+                                    <h3>{item.productId.title}</h3>
+                                    <p>Quantity: {item.quantity}</p>
+                                    <p>₹{item.productId.price}</p>
+                                </div>
+                            </div>
+                        ))}
+                        <div className="order-total">
+                            <strong>Total: ₹{totalAmount}</strong>
+                        </div>
+                    </div>
+                )}
+
+                {/* Address + Payment form */}
+                <div className="form-container">
+
+                    <h3 className="section-header">Delivery Address</h3>
+
+                    <div className="input-wrapper">
+                        <input
+                            type="text"
+                            placeholder="Full Name"
+                            value={address.name}
+                            onChange={(e) => setAddress({ ...address, name: e.target.value })}
+                            className="text-input"
+                        />
+                    </div>
+
+                    <div className="input-wrapper">
+                        <input
+                            type="text"
+                            placeholder="Street Address"
+                            value={address.address}
+                            onChange={(e) => setAddress({ ...address, address: e.target.value })}
+                            className="text-input"
+                        />
+                    </div>
+
+                    <div className="input-wrapper">
+                        <input
+                            type="text"
+                            placeholder="City"
+                            value={address.city}
+                            onChange={(e) => setAddress({ ...address, city: e.target.value })}
+                            className="text-input"
+                        />
+                    </div>
+
+                    <div className="input-wrapper">
+                        <input
+                            type="text"
+                            placeholder="Pincode"
+                            value={address.pincode}
+                            onChange={(e) => setAddress({ ...address, pincode: e.target.value })}
+                            className="text-input"
+                        />
+                    </div>
+
+                    <h3 className="section-header">Payment Method</h3>
+
+                    <div className="payment-methods">
+                        <label className="radio-option">
+                            <input
+                                type="radio"
+                                name="payment"
+                                value="COD"
+                                checked={payment === "COD"}
+                                onChange={(e) => setPayment(e.target.value)}
+                            />
+                            <span>Cash on Delivery</span>
+                        </label>
+
+                        <label className="radio-option">
+                            <input
+                                type="radio"
+                                name="payment"
+                                value="CARD"
+                                checked={payment === "CARD"}
+                                onChange={(e) => setPayment(e.target.value)}
+                            />
+                            <span>Card / UPI</span>
+                        </label>
+                    </div>
+
+                    {payment === "CARD" && (
+                        <div className="card-input-area">
+                            <input
+                                type="text"
+                                placeholder="Card Number or UPI ID"
+                                value={cardOrUpi}
+                                onChange={(e) => setCardOrUpi(e.target.value)}
+                                className="text-input"
+                            />
+                        </div>
+                    )}
+
+                    <button
+                        className="order-button"
+                        onClick={handlePlaceOrder}
+                        disabled={placing}
+                    >
+                        {placing ? "Placing Order..." : "Confirm Order"}
+                    </button>
+
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-       
-        <div className="form-container">
-          
-          
-          <h3 className="section-header">Delivery Address</h3>
-
-          <div className="input-wrapper">
-            <input
-              type="text"
-              placeholder="Full Name"
-              value={address.name}
-              onChange={(e) => setAddress({ ...address, name: e.target.value })}
-              className="text-input"
-            />
-          </div>
-
-          <div className="input-wrapper">
-            <input
-              type="text"
-              placeholder="Street Address"
-              value={address.addres}
-              onChange={(e) => setAddress({ ...address, addres: e.target.value })}
-              className="text-input"
-            />
-          </div>
-
-          <div className="input-wrapper">
-            <input
-              type="text"
-              placeholder="City"
-              value={address.city}
-              onChange={(e) => setAddress({ ...address, city: e.target.value })}
-              className="text-input"
-            />
-          </div>
-
-          <div className="input-wrapper">
-            <input
-              type="text"
-              placeholder="Pincode"
-              value={address.pincode}
-              onChange={(e) => setAddress({ ...address, pincode: e.target.value })}
-              className="text-input"
-            />
-          </div>
-
-          
-          <h3 className="section-header">Payment Method</h3>
-
-          <div className="payment-methods">
-            <label className="radio-option">
-              <input
-                type="radio"
-                name="payment"
-                value="COD"
-                checked={payment === "COD"}
-                onChange={(e) => setPayment(e.target.value)}
-              />
-              <span>Cash on Delivery</span>
-            </label>
-
-            <label className="radio-option">
-              <input
-                type="radio"
-                name="payment"
-                value="CARD"
-                checked={payment === "CARD"}
-                onChange={(e) => setPayment(e.target.value)}
-              />
-              <span>Card / UPI</span>
-            </label>
-          </div>
-
-          {payment === "CARD" && (
-            <div className="card-input-area">
-              <input
-                type="text"
-                placeholder="Card Number or UPI ID"
-                value={cardDetails.cardOrUpi}
-                onChange={(e) => setCardDetails({ cardOrUpi: e.target.value })}
-                className="text-input"
-              />
             </div>
-          )}
-
-          <button className="order-button" onClick={handlePlaceOrder}>
-            Confirm Order
-          </button>
         </div>
-
-      </div>
-    </div>
-  )
+    )
 }
 
 export default BuyNow

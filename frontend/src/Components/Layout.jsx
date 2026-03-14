@@ -8,7 +8,7 @@ function Layout() {
   return (
     <>
     <Navbar/>
-    <div style={{ padding: "20px" }}>
+    <div style={{ padding: "20px 0" }}>
         <Outlet />
       </div>
       <Footer/>

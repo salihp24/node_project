@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect, useState, useMemo } from 'react'
-import axios from 'axios'
+import apiClient from "../api/apiClient.js"
 import ProductCard from './ProductCard'
 import "./ProductCard.css"
 
@@ -9,12 +9,12 @@ function ProductList() {
     const [loading, setLoading] = useState(true)
     const [searchQuery, setSearchQuery] = useState("")
     const [activeCategory, setActiveCategory] = useState("All")
-    const [searchOpen, setSearchOpen] = useState(false)  // ✅ new
+    const [searchOpen, setSearchOpen] = useState(false) 
 
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const res = await axios.get("http://localhost:3001/products")
+                const res = await apiClient.get('/products')
                 setProducts(res.data)
             } catch (error) {
                 console.log("Error fetching products", error)
@@ -109,7 +109,7 @@ function ProductList() {
                     <p>No Products Found</p>
                 ) : (
                     filteredProducts.map((product) => (
-                        <ProductCard key={product.id} product={product} />
+                        <ProductCard key={product._id} product={product} />
                     ))
                 )}
             </div>

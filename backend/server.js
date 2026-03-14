@@ -10,6 +10,7 @@ import cartRoutes from "./routes/cartRoutes.js"
 import orderRoutes from "./routes/orderRoutes.js"
 
 
+import adminRoutes from "./routes/adminRoutes/adminRoutes.js"
 import adminUserRoutes from "./routes/adminRoutes/adminUserRoutes.js"
 import adminProductRoutes from "./routes/adminRoutes/adminProductRoutes.js"
 import adminOrderRoutes from "./routes/adminRoutes/adminOrderRoutes.js"
@@ -21,6 +22,12 @@ const app = express()
 //Connect Database
 connectDb()
 
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+}))
+
+
 app.use(express.json())
 
 //User Routess
@@ -31,10 +38,11 @@ app.use("/api/orders", orderRoutes)
 
 
 //Admin Routes
+app.use("/api/admin", adminRoutes)
 app.use("/api/admin/users", adminUserRoutes)
 app.use("/api/admin/products", adminProductRoutes)
 app.use("/api/admin/orders", adminOrderRoutes)
-app.use("/api/admin/dashboard", adminStatsRoutes )
+app.use("/api/admin/dashboard", adminStatsRoutes)
 
 
 
@@ -45,6 +53,13 @@ app.get("/", (req, res) => {
 
 //Start Server
 const PORT = process.env.PORT || 5000
+
+app.use((err, req, res, next) => {
+    const statusCode = res.statusCode === 200 ? 500 : res.statusCode
+    res.status(statusCode).json({
+        message: err.message
+    })
+})
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)

@@ -13,7 +13,7 @@ function ProductCard({product}) {
         <h3 className="product-title">{product.title}</h3>
         <p className="product-description">{product.description}</p>
         <p className="product-price">₹{product.price}</p>
-        <Link to={`/products/${product.id}`} className="view-details-button">View Details</Link>
+        <Link to={`/products/${product._id}`} className="view-details-button">View Details</Link>
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
+import apiClient from "../api/apiClient"
 import axios from "axios"
 import "./Login.css"
 
@@ -24,19 +25,25 @@ function Login() {
 
   const handleLogin = async () => {
     if (!user.email || !user.password) {
-      setError("Please fill the field")
+      setError('Please fill the field')
       return
     }
-
     try {
-      const res = await axios.post("http://localhost:5000/api/users/login", user)
-      localStorage.setItem("userInfo", JSON.stringify(res.data))
-      localStorage.setItem("isLoggedIn", "true")
-      navigate("/home")
+      const res = await apiClient.post('/users/login', {
+        email: user.email,
+        password: user.password
+      })
+      const data = res.data
+      localStorage.setItem('token', data.token)
+      localStorage.setItem('userId', data._id)
+      localStorage.setItem('isLoggedIn', 'true')
+      localStorage.setItem('username', data.username)
+      navigate('/home')
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed")
+      setError(err.response?.data?.message || 'Login failed')
     }
   }
+
 
   return (
     <div className="login-container">

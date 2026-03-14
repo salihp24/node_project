@@ -1,54 +1,46 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
 import { Link, useNavigate } from "react-router-dom"
+import apiClient from "../api/apiClient"
+import { useCart } from "../Context/cartContext"
 import "./Cart.css"
 
 function Cart() {
   const [cart, setCart] = useState([])
-  const navigate=useNavigate()
+  const navigate = useNavigate()
+  const { refreshCartCount } = useCart()
+
+  const fetchCart = async () => {
+    try {
+      const res = await apiClient.get('/cart')
+      setCart(res.data.items || [])
+    } catch (err) {
+      console.error("Cart error:", err.response?.data)
+    }
+  }
 
   useEffect(() => {
     fetchCart()
   }, [])
 
-  const fetchCart = async () => {
-    const userId = localStorage.getItem("userId")
-    if (!userId) return
-
-    const res = await axios.get(`http://localhost:3001/cart?userId=${userId}`)
-    setCart(res.data)
+  const increaseQty = async (productId) => {
+    await apiClient.post('/cart', { productId, quantity: 1 })
+    fetchCart()
+    refreshCartCount()
   }
 
-  const increaseQty = async (id, quantity) => {
-    await axios.patch(`http://localhost:3001/cart/${id}`, {
-      quantity: quantity + 1
-    })
+  const decreaseQty = async (productId) => {
+    await apiClient.patch(`/cart/${productId}/decrease`)
     fetchCart()
-  }
-
-  const decreaseQty = async (id, quantity) => {
-    if (quantity === 1) {
-      await axios.delete(`http://localhost:3001/cart/${id}`)
-    } else {
-      await axios.patch(`http://localhost:3001/cart/${id}`, {
-        quantity: quantity - 1
-      })
-    }
-    fetchCart()
+    refreshCartCount()
   }
 
   const calculateTotal = () => {
     return cart.reduce((total, item) => {
-      const price = parseFloat(item.price.replace(/,/g, ''))
-      return total + (price * item.quantity)
+      return total + ((item.productId?.price || 0) * item.quantity)
     }, 0)
   }
 
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0)
-
-  const handleCheckout=()=>{
-    navigate("/buy-now")
-  }
 
   return (
     <div className="cart-page">
@@ -67,38 +59,37 @@ function Cart() {
       ) : (
         <>
           <div className="cart-items">
-            {cart.map(item => (
-              <div key={item.id} className="cart-item">
-                <img 
-                  src={item.image} 
-                  alt={item.title} 
-                  className="cart-item-image"
-                />
-                
-                <div className="cart-item-details">
-                  <h4 className="cart-item-title">{item.title}</h4>
-                  <p className="cart-item-price">{item.price}</p>
-                </div>
-
-                <div className="cart-item-actions">
-                  <div className="cart-quantity-controls">
-                    <button 
-                      onClick={() => decreaseQty(item.id, item.quantity)}
-                      className="cart-qty-button"
-                    >
-                      −
-                    </button>
-                    <span className="cart-quantity">{item.quantity}</span>
-                    <button 
-                      onClick={() => increaseQty(item.id, item.quantity)}
-                      className="cart-qty-button"
-                    >
-                      +
-                    </button>
+            {cart.map(item => {
+              if (!item.productId) return null
+              return (
+                <div key={item.productId._id} className="cart-item">
+                  <img
+                    src={item.productId.image}
+                    alt={item.productId.name}
+                    className="cart-item-image"
+                  />
+                  <div className="cart-item-details">
+                    <h4 className="cart-item-title">{item.productId.name}</h4>
+                    <p className="cart-item-price">
+                      ₹{Number(item.productId.price).toLocaleString('en-IN')}
+                    </p>
+                  </div>
+                  <div className="cart-item-actions">
+                    <div className="cart-quantity-controls">
+                      <button
+                        onClick={() => decreaseQty(item.productId._id)}
+                        className="cart-qty-button"
+                      >−</button>
+                      <span className="cart-quantity">{item.quantity}</span>
+                      <button
+                        onClick={() => increaseQty(item.productId._id)}
+                        className="cart-qty-button"
+                      >+</button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
 
           <div className="cart-summary">
@@ -112,7 +103,10 @@ function Cart() {
                 ₹{calculateTotal().toLocaleString('en-IN')}
               </span>
             </div>
-            <button className="cart-checkout-button" onClick={handleCheckout}>
+            <button
+              className="cart-checkout-button"
+              onClick={() => navigate('/buy-now')}
+            >
               Proceed to Checkout
             </button>
           </div>

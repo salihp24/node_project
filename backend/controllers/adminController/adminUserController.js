@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler"
-import User from "../../models/user.js"
+import User from "../../models/User.js"
 import Order from "../../models/Order.js"
 
 //View users
@@ -10,7 +10,8 @@ export const getUsers = asyncHandler(async (req, res) => {
 
 //view single user and his orders
 export const getSingleUser = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id).select("-password")
+    const user = await User.findOne({ _id: req.params.id, isDeleted: false }).select("-password")
+
 
     if (!user) {
         res.status(404)

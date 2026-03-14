@@ -35,6 +35,11 @@ export const adminGetProductById = asyncHandler(async (req, res) => {
 export const createProduct = asyncHandler(async (req, res) => {
     const { title, description, price, category, stock } = req.body
 
+    if (!title || !description || !price || !category || !stock) {
+        res.status(400)
+        throw new Error("All fields are required")
+    }
+
     const image = req.file?.path
 
     if (!image) {
@@ -42,7 +47,7 @@ export const createProduct = asyncHandler(async (req, res) => {
         throw new Error("Image is required")
     }
 
-    const product = await Product.create({ title, description, price, image, category, stock })
+    const product = await Product.create({ title, description, price: Number(price), image, category, stock: Number(stock) })
 
     res.status(201).json(product)
 })
@@ -58,12 +63,17 @@ export const updateProduct = asyncHandler(async (req, res) => {
 
     const { title, description, price, category, stock } = req.body
 
+    if (!title && !description && !price && !category && stock === undefined && !req.file) {
+        res.status(400)
+        throw new Error("Please provide at least one field to update")
+    }
+
     product.title = title ?? product.title
     product.description = description ?? product.description
-    product.price = price ?? product.price
+    product.price = price !== undefined ? Number(price) : product.price
     product.image = req.file?.path ?? product.image
     product.category = category ?? product.category
-    product.stock = stock ?? product.stock
+    product.stock = stock !== undefined ? Number(stock) : product.stock
 
     const updated = await product.save()
     res.status(200).json(updated)
@@ -72,7 +82,7 @@ export const updateProduct = asyncHandler(async (req, res) => {
 
 //soft delete
 export const deleteProduct = asyncHandler(async (req, res) => {
-    const product = await Product.findById(req.params.id)
+    const product = await Product.findOne({ _id: req.params.id, isDeleted: false })
 
     if (!product) {
         res.status(404)
@@ -82,7 +92,6 @@ export const deleteProduct = asyncHandler(async (req, res) => {
     product.isDeleted = true
     await product.save()
 
-    res.json({
-        message: "Product Deleted"
-    })
+    res.status(200).json({ message: "Product deleted successfully" })
+
 })

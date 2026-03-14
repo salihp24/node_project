@@ -68,23 +68,27 @@ export const decreaseCartQuantity = asyncHandler(async (req, res) => {
 
 //Get cart of the user 
 export const getCart = asyncHandler(async (req, res) => {
-    const cart = await Cart.findOne({ userId: req.user._id })
+    let cart = await Cart.findOne({ userId: req.user._id })
         .populate("items.productId")
 
     if (!cart) {
-        return res.json({
-            items: [],
-            message: "Cart is empty"
-        })
+        cart = { items: [] }
     }
 
-    res.json(cart)
+    res.json({
+        items: cart.items
+    })
 })
 
 
 //Remove Cart item
 export const removeCartItem = asyncHandler(async (req, res) => {
     const cart = await Cart.findOne({ userId: req.user._id })
+
+    if (!cart) {
+        res.status(404)
+        throw new Error("Cart not found")
+    }
 
     cart.items = cart.items.filter(items => items.productId.toString() !== req.params.productId)
 
