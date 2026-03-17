@@ -1,10 +1,10 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import apiClient from '../api/apiClient'
 import "./AdminProducts.css"
 
 function AdminProducts() {
-    
+
     const [isEditing, setIsEditing] = useState(false)
     const [editId, setEditId] = useState(null)
     const [products, setProducts] = useState([])
@@ -16,22 +16,26 @@ function AdminProducts() {
         image: "",
         category: ""
     })
-    
+
     const fetchProducts = async () => {
-        const res = await axios.get("http://localhost:3001/products")
+    try {
+        const res = await apiClient.get("/admin/products")
         setProducts(res.data)
+    } catch (error) {
+        console.log(error)
     }
+}
 
     useEffect(() => {
         fetchProducts()
     }, [])
 
-    // ✅ Derive unique brands dynamically from products
+    // Derive unique brands dynamically from products
     const uniqueBrands = [...new Set(products.map(p => p.category).filter(Boolean))].sort()
 
     const handleEdit = (product) => {
         setIsEditing(true)
-        setEditId(product.id)
+        setEditId(product._id)
         setIsNewBrand(false)
         setForm({
             title: product.title,
@@ -43,29 +47,34 @@ function AdminProducts() {
     }
 
     const handleDelete = async (id) => {
-        await axios.delete(`http://localhost:3001/products/${id}`)
+        await apiClient.delete(`/admin/products/${id}`)
         fetchProducts()
     }
 
     const handleSubmit = async () => {
-        if (!form.title || !form.price || !form.description || !form.image || !form.category) {
-            alert("Fill all the fields")
-            return
-        }
+        const formData = new FormData()
+        formData.append("title", form.title)
+        formData.append("price", form.price)
+        formData.append("description", form.description)
+        formData.append("category", form.category)
+        if (form.image) formData.append("image", form.image)
 
-        if (isEditing) {
-            await axios.patch(`http://localhost:3001/products/${editId}`, form)
-            alert("Product Updated")
-        } else {
-            await axios.post("http://localhost:3001/products", form)
-            alert("Product added")
+        try {
+            if (isEditing) {
+                await apiClient.put(`/admin/products/${editId}`, formData)
+                alert("Product updated successfully")
+            } else {
+                await apiClient.post("/admin/products", formData)
+                alert("Product added successfully")
+            }
+            setForm({ title: "", price: "", description: "", image: null, category: ""})
+            setIsEditing(false)
+            setEditId(null)
+            setIsNewBrand(false)
+            fetchProducts()
+        } catch (err) {
+            alert(err.response?.data?.message || "Something went wrong")
         }
-
-        setForm({ title: "", price: "", description: "", image: "", category: "" })
-        setIsEditing(false)
-        setEditId(null)
-        setIsNewBrand(false)
-        fetchProducts()
     }
 
     const handleCancel = () => {
@@ -120,10 +129,9 @@ function AdminProducts() {
 
                     <div className="admin-form-group">
                         <input
-                            placeholder="Image URL"
-                            value={form.image}
-                            onChange={e => setForm({ ...form, image: e.target.value })}
-                            className="admin-input"
+                            type="file"
+                            accept="image/*"
+                            onChange={e => setForm({ ...form, image: e.target.files[0] })}
                         />
                     </div>
 
@@ -191,7 +199,7 @@ function AdminProducts() {
                         </div>
                     ) : (
                         products.map(product => (
-                            <div key={product.id} className="admin-product-item">
+                            <div key={product._id} className="admin-product-item">
                                 <div className="admin-product-header">
                                     <div className="admin-product-info">
                                         <h4 className="admin-product-title">{product.title}</h4>
@@ -213,7 +221,7 @@ function AdminProducts() {
                                         Edit
                                     </button>
                                     <button
-                                        onClick={() => handleDelete(product.id)}
+                                        onClick={() => handleDelete(product._id)}
                                         className="admin-delete-button"
                                     >
                                         Delete

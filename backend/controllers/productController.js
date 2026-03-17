@@ -4,24 +4,28 @@ import Product from "../models/Product.js"
 
 //all products or categorty
 export const getProducts = asyncHandler(async (req, res) => {
-
-    const { category, keyword } = req.query
-
+    const { category, keyword, page = 1, limit = 8 } = req.query
 
     let filter = { isDeleted: false }
 
     if (category) {
         filter.category = { $regex: category, $options: "i" }
     }
-
     if (keyword) {
         filter.title = { $regex: keyword, $options: "i" }
     }
 
+    const total = await Product.countDocuments(filter)
     const products = await Product.find(filter)
+        .skip((page - 1) * limit)
+        .limit(Number(limit))
 
-    res.json(products)
-
+    res.json({
+        products,
+        currentPage: Number(page),
+        totalPages: Math.ceil(total / limit),
+        total
+    })
 })
 
 

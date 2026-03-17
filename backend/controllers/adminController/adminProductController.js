@@ -4,15 +4,15 @@ import Product from "../../models/Product.js"
 
 //View all products
 export const adminGetProducts = asyncHandler(async (req, res) => {
-    const { category } = req.query
+        const { category } = req.query
 
-    const filter = {
-        isDeleted: false,
-        ...(category && { category: { $regex: category, $options: "i" } })
-    }
+        const filter = {    
+            isDeleted: false,
+            ...(category && { category: { $regex: category, $options: "i" } })
+        }
 
-    const products = await Product.find(filter)
-    res.status(200).json(products)
+        const products = await Product.find(filter)
+        res.status(200).json(products)
 })
 
 //View specific product
@@ -33,9 +33,9 @@ export const adminGetProductById = asyncHandler(async (req, res) => {
 
 //Create a product
 export const createProduct = asyncHandler(async (req, res) => {
-    const { title, description, price, category, stock } = req.body
+    const { title, description, price, category} = req.body
 
-    if (!title || !description || !price || !category || !stock) {
+    if (!title || !description || !price || !category) {
         res.status(400)
         throw new Error("All fields are required")
     }
@@ -47,7 +47,7 @@ export const createProduct = asyncHandler(async (req, res) => {
         throw new Error("Image is required")
     }
 
-    const product = await Product.create({ title, description, price: Number(price), image, category, stock: Number(stock) })
+    const product = await Product.create({ title, description, price: Number(price), image, category})
 
     res.status(201).json(product)
 })
@@ -61,9 +61,9 @@ export const updateProduct = asyncHandler(async (req, res) => {
         throw new Error("Product not found")
     }
 
-    const { title, description, price, category, stock } = req.body
+    const { title, description, price, category } = req.body
 
-    if (!title && !description && !price && !category && stock === undefined && !req.file) {
+    if (!title && !description && !price && !category && !req.file) {
         res.status(400)
         throw new Error("Please provide at least one field to update")
     }
@@ -73,7 +73,6 @@ export const updateProduct = asyncHandler(async (req, res) => {
     product.price = price !== undefined ? Number(price) : product.price
     product.image = req.file?.path ?? product.image
     product.category = category ?? product.category
-    product.stock = stock !== undefined ? Number(stock) : product.stock
 
     const updated = await product.save()
     res.status(200).json(updated)

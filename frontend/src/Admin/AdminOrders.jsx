@@ -1,64 +1,76 @@
 import React, { useEffect, useState } from "react"
-import axios from "axios"
+import apiClient from '../api/apiClient'
 import "./AdminOrders.css"
 
 function AdminOrders() {
-  const [orders, setOrders] = useState([])
+    const [orders, setOrders] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState("")
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:3001/orders")
-      .then(res => setOrders(res.data))
-      .catch(err => console.error(err))
-  }, [])
+    useEffect(() => {
+        const fetchOrders = async () => {
+            try {
+                const { data } = await apiClient.get("/admin/orders")
+                setOrders(data)
+            } catch (err) {
+                setError(err.response?.data?.message || "Failed to load orders")
+            } finally {
+                setLoading(false)
+            }
+        }
+        fetchOrders()
+    }, [])
 
-  return (
-    <div className="admin-orders">
-      <h2 className="orders-title">Orders</h2>
+    if (loading) return <p className="no-orders">Loading...</p>
+    if (error) return <p className="no-orders">{error}</p>
 
-      {orders.length === 0 ? (
-        <p className="no-orders">No orders found</p>
-      ) : (
-        <div className="orders-table-container">
-          <table className="orders-table">
-            <thead>
-              <tr>
-                <th>Order ID</th>
-                <th>User</th>
-                <th>Email</th>
-                <th>Amount</th>
-                <th>Payment Method</th>
-                <th>Payment Status</th>
-                <th>Date</th>
-              </tr>
-            </thead>
+    return (
+        <div className="admin-orders">
+            <h2 className="orders-title">Orders</h2>
 
-            <tbody>
-              {orders.map(order => (
-                <tr key={order.id}>
-                  <td>#{order.id}</td>
-                  <td>{order.userName}</td>
-                  <td>{order.userEmail}</td>
-                  <td className="amount">₹{order.totalAmount}</td>
-                  <td>{order.paymentMethod}</td>
-                  <td>
-                    <span className={`status ${order.paymentStatus.toLowerCase()}`}>
-                      {order.paymentStatus}
-                    </span>
-                  </td>
-                  <td>
-                    {order.createdAt
-                      ? new Date(order.createdAt).toLocaleString()
-                      : "-"}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+            {orders.length === 0 ? (
+                <p className="no-orders">No orders found</p>
+            ) : (
+                <div className="orders-table-container">
+                    <table className="orders-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>User</th>
+                                <th>Email</th>
+                                <th>Items</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {orders.map(order => (
+                                <tr key={order._id}>
+                                    <td>#{order._id.slice(-6)}</td>
+                                    <td>{order.userId?.username || "Deleted User"}</td>
+                                    <td>{order.userId?.email || "-"}</td>
+                                    <td>{order.totalItems}</td>
+                                    <td className="amount">
+                                        ₹{order.totalPrice.toLocaleString("en-IN")}
+                                    </td>
+                                    <td>
+                                        {order.createdAt
+                                            ? new Date(order.createdAt).toLocaleDateString("en-IN", {
+                                                year: "numeric",
+                                                month: "short",
+                                                day: "numeric"
+                                            })
+                                            : "-"}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
         </div>
-      )}
-    </div>
-  )
+    )
 }
 
 export default AdminOrders

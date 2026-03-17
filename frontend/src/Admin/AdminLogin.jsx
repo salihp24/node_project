@@ -21,10 +21,9 @@ function AdminLogin() {
 
       const data = res.data
 
-      sessionStorage.setItem("adminToken", data.token)
-      sessionStorage.setItem("adminRole", data.role)
-
-
+      localStorage.clear()                       
+      localStorage.setItem("token", data.token)
+      localStorage.setItem("role", data.role)
       navigate("/admin/dashboard", { replace: true })
 
     } catch (error) {
@@ -54,6 +53,7 @@ function AdminLogin() {
             value={pass}
             onChange={(e) => setPass(e.target.value)}
             className="admin-input"
+            autoComplete="current-password"
           />
 
           <button type="submit" className="admin-login-btn">

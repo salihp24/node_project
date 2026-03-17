@@ -69,7 +69,7 @@ function Cart() {
                     className="cart-item-image"
                   />
                   <div className="cart-item-details">
-                    <h4 className="cart-item-title">{item.productId.name}</h4>
+                    <h4 className="cart-item-title">{item.productId.title}</h4>
                     <p className="cart-item-price">
                       ₹{Number(item.productId.price).toLocaleString('en-IN')}
                     </p>

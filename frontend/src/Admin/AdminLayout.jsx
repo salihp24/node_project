@@ -5,7 +5,7 @@ function AdminLayout() {
   const navigate = useNavigate()
 
   const handleLogout = () => {
-    sessionStorage.clear()
+    localStorage.clear()
     navigate("/admin/login", { replace: true })
   }
 

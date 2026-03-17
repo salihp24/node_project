@@ -4,8 +4,31 @@ import Order from "../../models/Order.js"
 
 //View users
 export const getUsers = asyncHandler(async (req, res) => {
-    const users = await User.find({ isDeleted: false }).select("-password")
-    res.status(200).json(users)
+    const { search, page = 1, limit = 5 } = req.query
+
+    const filter = { isDeleted: false }
+
+    if (search) {
+        filter.$or = [
+            { username: { $regex: search, $options: "i" } },
+            { email: { $regex: search, $options: "i" } }
+        ]
+    }
+
+    const skip = (Number(page) - 1) * Number(limit)
+
+    const totalUsers = await User.countDocuments(filter)
+    const users = await User.find(filter)
+        .select("-password")
+        .skip(skip)
+        .limit(Number(limit))
+
+    res.status(200).json({
+        users,
+        totalUsers,
+        totalPages: Math.ceil(totalUsers / Number(limit)),
+        currentPage: Number(page)
+    })
 })
 
 //view single user and his orders

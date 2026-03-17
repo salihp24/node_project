@@ -1,0 +1,83 @@
+.user-details-container {
+  padding: 40px;
+  background: #f5f7fa;
+  min-height: 100vh;
+}
+
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.details-header h2 {
+  font-size: 28px;
+  color: #0e7c86;
+}
+
+.back-btn {
+  padding: 8px 14px;
+  border: none;
+  background: #147a83;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.back-btn:hover {
+  background: #0f5f66;
+}
+
+.details-card {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  max-width: 600px;
+  box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: #555;
+}
+
+.detail-value {
+  color: #222;
+}
+
+.status-badge {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.status-badge.active {
+  background: #d7f5e8;
+  color: #148a54;
+}
+
+.status-badge.blocked {
+  background: #ffe0e0;
+  color: #d62828;
+}
+
+.loading-text,
+.error-text {
+  font-size: 18px;
+  text-align: center;
+  margin-top: 50px;
+}

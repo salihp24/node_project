@@ -19,6 +19,7 @@ import AdminUsers from "./Admin/AdminUsers"
 import AdminOrders from "./Admin/AdminOrders"
 import UserProtect from "./Components/userProtect"
 import MyOrders from "./Pages/my-orders"
+import AdminUserDetails from "./Admin/AdminUserDetails"
 
 function App() {
   return (
@@ -63,6 +64,7 @@ function App() {
         <Route path="dashboard" element={<AdminDashboard />} />
         <Route path="products" element={<AdminProducts />} />
         <Route path="users" element={<AdminUsers />} />
+        <Route path="/admin/users/:id" element={<AdminUserDetails />} />
         <Route path="orders" element={<AdminOrders />} />
       </Route>
     </Routes>
